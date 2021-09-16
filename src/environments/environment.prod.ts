@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: "http://localhost:8080/api/v1",
+  apiUrl: "https://baseline-service-rac.herokuapp.com/api/v1",
 };

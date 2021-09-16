@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Investment } from 'src/app/interface/investment/investment.module';
 import { CalculatorService } from 'src/app/services/calculator.service';
 import Swal from 'sweetalert2';
@@ -14,15 +14,17 @@ export class InitialInvestmentComponent implements OnInit {
   investmentYield: any[] = [];
   message: any = '';
   calculatorForm: FormGroup;
-  closeResult: string = "";
+  closeResult: string = '';
   @ViewChild('content', { static: false }) private content: any;
 
-  constructor(private calculatorService: CalculatorService,
-    private modalService: NgbModal) {
+  constructor(
+    private calculatorService: CalculatorService,
+    private modalService: NgbModal
+  ) {
     this.calculatorForm = new FormGroup({
       initialInvestment: new FormControl('', [Validators.required]),
-      yearlyInput: new FormControl('',),
-      yearlyInputIncrement: new FormControl('',),
+      yearlyInput: new FormControl(''),
+      yearlyInputIncrement: new FormControl(''),
       investmentYears: new FormControl('', [Validators.required]),
       investmentYield: new FormControl('', [Validators.required]),
     });
@@ -36,10 +38,18 @@ export class InitialInvestmentComponent implements OnInit {
         this.calculatorService
           .getInvestmentYieldTable(value as Investment)
           .then((data: any) => {
-            this.investmentYield = data
+            this.investmentYield = data;
             this.open(this.content);
+          })
+          .catch((error) => {
+            this.message = error;
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: this.message,
+            });
           });
-      } catch (err) {
+      } catch (err:any) {
         this.message = err;
         Swal.fire({
           icon: 'error',
@@ -58,12 +68,17 @@ export class InitialInvestmentComponent implements OnInit {
     }
   }
 
-  open(content:any) {
-    this.modalService.open(content, {ariaLabelledBy: 'investmentYieldModal',  size: 'lg'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+  open(content: any) {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'investmentYieldModal', size: 'lg' })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
   }
 
   private getDismissReason(reason: any): string {
@@ -72,7 +87,7 @@ export class InitialInvestmentComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
 }
