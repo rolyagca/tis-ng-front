@@ -1,0 +1,42 @@
+<div class="container px-4 py-5">
+  <div class="card card0">
+    <div class="d-flex flex-lg-row flex-column-reverse">
+      <div class="card1">
+        <div class="row justify-content-center my-auto">
+          <div class="col-lg-8 my-5">
+            <form novalidate (ngSubmit)="getInvestmentTable(calculatorForm)" [formGroup]="calculatorForm">
+              <h3 class="mb-3">Compound Interest Calculator</h3><small class="text-muted abc">Enter your data:</small>
+              <div class="form-group mt-4"><span><strong>Initial Investment</strong></span> <input type="number"
+                  class="form-control" placeholder="5000" formControlName="initialInvestment"></div>
+              <div class="form-group mt-4"><span><strong>Yearly Input</strong></span> <input type="number"
+                  class="form-control" placeholder="3000" formControlName="yearlyInput"></div>
+              <div class="form-group mt-4"><span><strong>Yearly Input Increment</strong></span> <input type="number"
+                  class="form-control" placeholder="1" formControlName="yearlyInputIncrement"></div>
+              <div class="form-group mt-4"><span><strong>Investment Years</strong></span><input type="number"
+                  class="form-control" placeholder="5" formControlName="investmentYears"></div>
+              <div class="form-group mt-4"><span><strong>Investment Yield (%)</strong></span><input type="number"
+                  class="form-control" placeholder="21" formControlName="investmentYield"></div>
+              <div class="row justify-content-center krow"><button type="submit"
+                  class="btn btn-primary btn-sm btn-block">CALCULATE</button></div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="card card2 "><img src="../assets/TIS_Logo2.png" id="image2" /></div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal class="card0">
+  <div class="modal-dialog modal-dialog-centered justify-content-center">
+    <div class="modal-content p-12" style="align-items: center;">
+      <div class='top'> <img class="img-thumbnail"
+          src="../assets/TIS_Logo2.png" />
+        <div class="headr"><h4 class="modal-title text-md" id="investmentYieldModal">Results:</h4></div>
+      </div>
+      <div class="modal-header border-0 mb-2">
+        <app-investment-yield [investmentYield]="investmentYield"></app-investment-yield>
+      </div>
+    </div>
+  </div>
+</ng-template>
